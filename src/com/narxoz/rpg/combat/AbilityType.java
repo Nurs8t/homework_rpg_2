@@ -1,6 +1,6 @@
 package com.narxoz.rpg.combat;
 
-public enum AbilityTypte {
+public enum AbilityType {
     DAMAGE,
     BUFF,
     DEBUFF,

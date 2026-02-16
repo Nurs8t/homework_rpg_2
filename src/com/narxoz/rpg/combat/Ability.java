@@ -6,6 +6,6 @@ public interface Ability {
      int getDamage();
      String getDescription();
      Ability clone();
-     AbilityTypte gerType();
+     AbilityType getType();
 
 }
