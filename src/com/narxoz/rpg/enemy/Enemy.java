@@ -18,7 +18,9 @@ public interface Enemy {
 
     LootTable getLootTable();
 
-     Enemy clone();
+    void displayInfo();
+
+    Enemy clone();
 
 
 }
