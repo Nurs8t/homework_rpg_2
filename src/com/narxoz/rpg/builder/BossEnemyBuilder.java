@@ -7,63 +7,64 @@ import com.narxoz.rpg.loot.LootTable;
 
 import java.util.*;
 
-public class BossEnemyBuilder {
+public class BossEnemyBuilder implements EnemyBuilder {
 
     private String name;
     private int health;
     private int damage;
     private int defense;
     private int speed;
+
     private String element;
-    private List<Ability> abilities = new ArrayList<>();
-    private Map<Integer,Integer> phases = new HashMap<>();
-    private LootTable loot;
-    private String ai;
+
+    private final List<Ability> abilities = new ArrayList<>();
+    private final Map<Integer, Integer> phases = new LinkedHashMap<>();
+
+    private LootTable lootTable;
+    private String aiBehavior;
+
     private boolean canFly;
-    private boolean hasBreath;
+    private boolean hasBreathAttack;
     private int wingspan;
 
-    public BossEnemyBuilder setName(String name){ this.name=name; return this; }
-    public BossEnemyBuilder setHealth(int health){ this.health=health; return this; }
-    public BossEnemyBuilder setDamage(int damage){ this.damage=damage; return this; }
-    public BossEnemyBuilder setDefense(int defense){ this.defense=defense; return this; }
-    public BossEnemyBuilder setSpeed(int speed){ this.speed=speed; return this; }
-    public BossEnemyBuilder setElement(String element){ this.element=element; return this; }
-
-    public BossEnemyBuilder addAbility(Ability a){
-        abilities.add(a);
+    @Override
+    public EnemyBuilder setName(String name) {
+        this.name = name;
         return this;
     }
 
-    public BossEnemyBuilder addPhase(int phase,int hp){
-        phases.put(phase,hp);
+    @Override
+    public EnemyBuilder setHealth(int health) {
+        this.health=health;
         return this;
     }
 
-    public BossEnemyBuilder setLootTable(LootTable loot){
-        this.loot=loot;
+    @Override public
+    EnemyBuilder setDamage(int damage) {
+        this.damage = damage;
+        return this;
+    }
+    @Override public
+    EnemyBuilder setDefense(int defense) {
+        this.defense = defense;
+        return this;
+    }
+    @Override public
+    EnemyBuilder setSpeed(int speed) {
+        this.speed = speed;
+        return this; }
+    @Override public
+    EnemyBuilder setAbilities(List<Ability> abilities) {
+        this.abilities.clear();
+        if (abilities != null) this.abilities.addAll(abilities);
         return this;
     }
 
-    public BossEnemyBuilder setAI(String ai){
-        this.ai=ai;
-        return this;
-    }
-
-    public BossEnemyBuilder setCanFly(boolean canFly){
-        this.canFly=canFly;
-        return this;
-    }
-
-    public BossEnemyBuilder setHasBreathAttack(boolean hasBreath){
-        this.hasBreath=hasBreath;
-        return this;
-    }
-
-    public BossEnemyBuilder setWingspan(int wingspan){
-        this.wingspan=wingspan;
-        return this;
-    }
+    @Override public
+    EnemyBuilder setLootTable(LootTable lootTable) {
+        this.lootTable = lootTable;
+        return this; }
+    @Override public EnemyBuilder setAI(String aiBehavior) { this.aiBehavior = aiBehavior; return this; }
 
     @Override
     public Enemy build() {
@@ -78,10 +79,10 @@ public class BossEnemyBuilder {
                 element,
                 abilitiesCopy,
                 phasesCopy,
-                loot,
-                ai,
+                lootTable,
+                aiBehavior,
                 canFly,
-                hasBreath,
+                hasBreathAttack,
                 wingspan
         );
     }
