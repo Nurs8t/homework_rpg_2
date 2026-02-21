@@ -39,7 +39,7 @@ public class DragonBoss implements Enemy {
     public DragonBoss(String name, int health, int damage, int defense,
                       int speed, String element,
                       List<Ability> abilities,
-                      int phase1Threshold, int phase2Threshold, int phase3Threshold,
+                      Map<Integer, Integer> phases,
                       LootTable lootTable, String aiBehavior,
                       boolean canFly, boolean hasBreathAttack, int wingspan) {
 
@@ -49,11 +49,8 @@ public class DragonBoss implements Enemy {
         this.defense = defense;
         this.speed = speed;
         this.element = element;
-        this.abilities = abilities != null ? abilities : new ArrayList<>();
-        this.phases = new HashMap<>();
-        this.phases.put(1, phase1Threshold);
-        this.phases.put(2, phase2Threshold);
-        this.phases.put(3, phase3Threshold);
+        this.abilities = abilities != null ? new ArrayList<>(abilities) : new ArrayList<>();
+        this.phases = phases != null ? new HashMap<>(phases) : new HashMap<>();
         this.lootTable = lootTable;
         this.aiBehavior = aiBehavior;
         this.canFly = canFly;
@@ -92,15 +89,11 @@ public class DragonBoss implements Enemy {
     public Enemy clone() {
 
         List<Ability> clonedAbilities = new ArrayList<>();
-        for (Ability a : this.abilities) {
+        for (Ability a : abilities) {
             clonedAbilities.add(a.clone());
         }
 
-        LootTable clonedLoot = (lootTable == null) ? null : lootTable.clone();
-
-        int p1 = phases.getOrDefault(1, 0);
-        int p2 = phases.getOrDefault(2, 0);
-        int p3 = phases.getOrDefault(3, 0);
+        Map<Integer, Integer> clonedPhases = new HashMap<>(phases);
 
         return new DragonBoss(
                 name,
@@ -110,8 +103,8 @@ public class DragonBoss implements Enemy {
                 speed,
                 element,
                 clonedAbilities,
-                p1, p2, p3,
-                clonedLoot,
+                clonedPhases,
+                lootTable == null ? null : lootTable.clone(),
                 aiBehavior,
                 canFly,
                 hasBreathAttack,

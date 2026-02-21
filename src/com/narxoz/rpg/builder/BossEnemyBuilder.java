@@ -5,10 +5,7 @@ import com.narxoz.rpg.enemy.DragonBoss;
 import com.narxoz.rpg.enemy.Enemy;
 import com.narxoz.rpg.loot.LootTable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BossEnemyBuilder {
 
@@ -68,15 +65,24 @@ public class BossEnemyBuilder {
         return this;
     }
 
-    public Enemy build(){
-        if(name==null || loot==null)
-            throw new IllegalStateException("Missing required fields");
+    @Override
+    public Enemy build() {
+        if (name == null || name.isBlank()) throw new IllegalStateException("Name is required");
+        if (health <= 0) throw new IllegalStateException("Health must be positive");
+
+        List<Ability> abilitiesCopy = new ArrayList<>(abilities);
+        Map<Integer, Integer> phasesCopy = new LinkedHashMap<>(phases);
 
         return new DragonBoss(
-                name,health,damage,defense,speed,
-                element,new ArrayList<>(abilities),
-                new HashMap<>(phases),
-                loot,ai,canFly,hasBreath,wingspan
+                name, health, damage, defense, speed,
+                element,
+                abilitiesCopy,
+                phasesCopy,
+                loot,
+                ai,
+                canFly,
+                hasBreath,
+                wingspan
         );
     }
 }

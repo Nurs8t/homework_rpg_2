@@ -64,6 +64,12 @@ public class BasicEnemyBuilder implements EnemyBuilder {
         this.lootTable = lootTable;
         return this;
     }
+
+    @Override
+    public EnemyBuilder setAI(String aiBehavior) {
+        return null;
+    }
+
     @Override
     public Enemy build() {
         if (name == null || name.isBlank()) {
