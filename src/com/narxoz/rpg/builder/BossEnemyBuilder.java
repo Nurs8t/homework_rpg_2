@@ -1,6 +1,8 @@
-package com.narxoz.rpg.enemy;
+package com.narxoz.rpg.builder;
 
 import com.narxoz.rpg.combat.Ability;
+import com.narxoz.rpg.enemy.DragonBoss;
+import com.narxoz.rpg.enemy.Enemy;
 import com.narxoz.rpg.loot.LootTable;
 
 import java.util.ArrayList;
